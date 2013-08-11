@@ -19,6 +19,8 @@ How to use it?
 2. On objects you want to tag, add a BetterUtils.Tag component
 3. Add whatever initial tags you want to the Tag List property
 
+![Editor Image](https://github.com/rje/BetterTags/raw/master/docs/image/sample.png)
+
 ### From code:
 
 Adding/removing/checking tags:
