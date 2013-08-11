@@ -7,7 +7,7 @@ namespace BetterTags
 	public class TagSystem
 	{
 
-		public static Dictionary<string, List<GameObject>> m_taggedObjects = new Dictionary<string, List<GameObject>> ();
+		public static Dictionary<int, List<GameObject>> m_taggedObjects = new Dictionary<int, List<GameObject>> ();
 
 		public static void Clear ()
 		{
@@ -25,10 +25,11 @@ namespace BetterTags
 
 		static void AddObjectForTag (string tag, GameObject go)
 		{
-			if (!m_taggedObjects.ContainsKey (tag)) {
-				m_taggedObjects [tag] = new List<GameObject> ();
+			var hash = tag.GetHashCode ();
+			if (!m_taggedObjects.ContainsKey (hash)) {
+				m_taggedObjects [hash] = new List<GameObject> ();
 			}
-			var goList = m_taggedObjects [tag];
+			var goList = m_taggedObjects [hash];
 			if (!goList.Contains (go)) {
 				goList.Add (go);
 			}
@@ -46,17 +47,18 @@ namespace BetterTags
 
 		static void RemoveObjectForTag (string tag, GameObject go)
 		{
-			if (m_taggedObjects.ContainsKey (tag)) {
-				var goList = m_taggedObjects [tag];
+			var hash = tag.GetHashCode ();
+			if (m_taggedObjects.ContainsKey (hash)) {
+				var goList = m_taggedObjects [hash];
 				goList.Remove (go);
 			}
 		}
 
 		public static List<GameObject> AllGameObjectsForTag (string tagName)
 		{
-			var tag = tagName.ToLower ();
-			if (m_taggedObjects.ContainsKey (tag)) {
-				return m_taggedObjects [tag];
+			var hash = tagName.ToLower ().GetHashCode();
+			if (m_taggedObjects.ContainsKey (hash)) {
+				return m_taggedObjects [hash];
 			} else {
 				return new List<GameObject> ();
 			}
@@ -64,9 +66,9 @@ namespace BetterTags
 
 		public static GameObject GameObjectForTag (string tagName)
 		{
-			var tag = tagName.ToLower ();
-			if (m_taggedObjects.ContainsKey (tag)) {
-				var goList = m_taggedObjects [tag];
+			var hash = tagName.ToLower ().GetHashCode();
+			if (m_taggedObjects.ContainsKey (hash)) {
+				var goList = m_taggedObjects [hash];
 				if (goList.Count > 0) {
 					return goList [0];
 				} else {
